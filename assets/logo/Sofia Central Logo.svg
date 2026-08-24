@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!--Generator: Xara Designer (www.xara.com), SVG filter version: 6.6.0.13-->
+<svg fill="none" fill-rule="evenodd" stroke="black" stroke-linejoin="bevel" stroke-miterlimit="10" font-family="Times New Roman" font-size="16" style="font-variant-ligatures:none" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" overflow="visible" width="492.556pt" height="478.361pt" viewBox="519.767 -891.626 492.556 478.361">
+ <defs>
+  <style type="text/css">@import url('https://themes.googleusercontent.com/fonts/css?family=Open Sans:400,600');</style>
+ </defs>
+ <g id="Page background" transform="scale(1 -1)" stroke-width="0.501"/>
+ <g id="Layer 1" transform="scale(1 -1)" stroke-width="0.501">
+  <g id="Group" font-weight="bold" font-family="Yu Gothic Medium" stroke-linecap="round" stroke="none">
+   <path d="M 859.902,803.412 L 836.471,809.844 C 669.508,855.675 569.534,756.92 613.315,589.408 L 618.866,568.174 C 662.647,400.662 798.458,363.148 922.014,484.437 L 938.538,500.657 C 1062.09,621.946 1026.87,757.581 859.902,803.412 Z" fill="#7f81ff" stroke-linejoin="round" stroke-width="15.206" marker-start="none" marker-end="none"/>
+   <path d="M 609.095,818.9 L 591.949,801.684 C 469.77,679.008 506.411,543.344 673.739,498.862 L 694.95,493.225 C 862.277,448.743 961.864,548.415 917.241,715.704 L 911.274,738.077 C 866.651,905.367 731.274,941.576 609.095,818.9 Z" fill="#00ffff" stroke-linejoin="round" stroke-width="15.206" marker-start="none" marker-end="none"/>
+   <path d="M 603.793,723.296 L 599.579,699.366 C 569.555,528.85 677.222,438.545 839.909,497.792 L 860.531,505.303 C 1023.22,564.55 1047.87,703.273 915.566,814.951 L 897.872,829.886 C 765.565,941.564 633.817,893.812 603.793,723.296 Z" fill="#bf00bd" stroke-linejoin="round" stroke-width="15.206" marker-start="none" marker-end="none"/>
+   <path d="M 904.838,556.825 L 912.809,579.778 C 969.61,743.335 877.701,849.637 707.654,817.059 L 686.099,812.928 C 516.053,780.35 469.616,647.325 582.446,515.999 L 597.535,498.436 C 710.365,367.11 848.037,393.268 904.838,556.825 Z" fill="#fee907" stroke-linejoin="round" stroke-width="15.206" marker-start="none" marker-end="none"/>
+   <ellipse rx="215.045" ry="215.045" transform="translate(766.919 648.037) rotate(156.132)" stroke-opacity="0.917647" fill="#ffffff" stroke-width="2.103" stroke-linejoin="miter" fill-opacity="0.917647"/>
+   <text xml:space="preserve" transform="translate(629.87 564.125) scale(1 -1)" kerning="auto" font-size="77.144" stroke-linejoin="round" stroke-width="1.074" fill="#203c97"><tspan x="0" y="0">Central</tspan></text>
+   <text xml:space="preserve" transform="translate(616.013 656.068) scale(1 -1)" kerning="auto" font-size="119.267" stroke-linejoin="round" stroke-width="1.66"><tspan x="0" y="0" fill="#7f007e">Sofia</tspan></text>
+  </g>
+ </g>
+</svg>

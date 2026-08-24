@@ -1,0 +1,129 @@
+name: Development Admin console Frontend CI workflow
+
+on:
+    push:
+        branches: [ develop ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [22.x]
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+          
+            - name: install dependencies
+              run: yarn install
+
+            - name: Build Application
+              run: yarn build
+              
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: us-west-1
+
+            - name: Login to Amazon ECR
+              run: aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 992382471830.dkr.ecr.us-west-1.amazonaws.com
+
+            - name: Build and Push Docker Image for 
+              uses: docker/build-push-action@v3 # Consider using a custom action
+              with:
+                  push: true
+                  tags: ${{ secrets.DEV_SOFIACENTRAL_ECR_REPO }}:${{ github.run_number }}
+                  context: .
+                  dockerfile: Dockerfile
+
+            - name: Checkout Helm Charts Repository
+              uses: actions/checkout@v4
+              with:
+                repository: 'Sofiamatic/Helm-Charts'
+                token: ${{ secrets.TOKEN }}
+                path: helm-charts
+
+            - name: List files in Helm Charts repository
+              run: ls -R ./helm-charts
+              
+            - name: Update values.yaml with new image tag
+              run: |
+                sed -i 's/tag:.*/tag: ${{ github.run_number }}/'  ./helm-charts/sofia-central/values.yaml
+
+            # - name: Commit and Push Changes
+            #   run: |
+            #     git config --global user.name "${{ github.actor }}"
+            #     git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+            #     cd helm-charts
+            #     git add ./sofia-central/values.yaml
+            #     git commit -m "Update image tag for sofia-central to ${{ github.run_number }} by ${{ github.actor }}"
+            #     git push
+            #   env:
+            #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
+            - name: generate secrets using secret manager
+              env:
+                  REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+                  REMOTE_USER: ${{ secrets.REMOTE_USER }}
+                  REMOTE_PASS: ${{ secrets.REMOTE_PASSWORD }}
+              run: |
+                  REMOTE_HOST=$(printf "%s" "$REMOTE_HOST" | tr -d '\r\n' | xargs)
+                  REMOTE_USER=$(printf "%s" "$REMOTE_USER" | tr -d '\r\n' | xargs)
+                  REMOTE_PASS=$(printf "%s" "$REMOTE_PASS" | tr -d '\r\n' | xargs)
+              
+                  echo "generate secrets from secret manager..."
+                  sshpass -p "$REMOTE_PASS" scp -o StrictHostKeyChecking=no ./generate-secrets.sh $REMOTE_USER@$REMOTE_HOST:/home/sofiamatics/
+                  sshpass -p "$REMOTE_PASS" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << 'EOF'
+                    cd /home/sofiamatics
+                    chmod +x generate-secrets.sh
+                    ./generate-secrets.sh
+                  EOF
+                  
+            - name: SSH into remote server and deploy application
+              env:
+                  REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+                  REMOTE_USER: ${{ secrets.REMOTE_USER }}
+                  REMOTE_PASS: ${{ secrets.REMOTE_PASSWORD }}
+              run: |
+                  # Clean variables
+                  REMOTE_HOST=$(printf "%s" "$REMOTE_HOST" | tr -d '\r\n' | xargs)
+                  REMOTE_USER=$(printf "%s" "$REMOTE_USER" | tr -d '\r\n' | xargs)
+                  REMOTE_PASS=$(printf "%s" "$REMOTE_PASS" | tr -d '\r\n' | xargs)
+              
+                  echo "Using connection string: $REMOTE_USER@$REMOTE_HOST"
+              
+                  sshpass -p "$REMOTE_PASS" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << 'EOF'
+                    echo "Connected successfully!"
+              
+                    # Stop and remove old container safely
+                    docker ps -a --filter "name=dev-sofia-central-frontend" --format "{{.ID}}" | \
+                    xargs -r docker stop
+                    docker ps -a --filter "name=dev-sofia-central-frontend" --format "{{.ID}}" | \
+                    xargs -r docker rm
+              
+                    # Login to ECR
+                    aws configure set region us-west-1
+                    aws ecr get-login-password --region us-west-1 | \
+                      docker login --username AWS --password-stdin 992382471830.dkr.ecr.us-west-1.amazonaws.com
+              
+                    # Pull the new image
+                    docker pull ${{ secrets.DEV_SOFIACENTRAL_ECR_REPO }}:${{ github.run_number }}
+              
+                    echo "Starting new container..."
+                    docker run -d \
+                      --name dev-sofia-central-frontend  \
+                      --env-file /home/sofiamatics/.env \
+                      --restart unless-stopped \
+                      -p 3000:3000 \
+                      ${{ secrets.DEV_SOFIACENTRAL_ECR_REPO }}:${{ github.run_number }}
+              
+                    # Cleanup
+                    docker image prune -a -f
+                  EOF

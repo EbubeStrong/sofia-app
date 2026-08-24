@@ -1,0 +1,145 @@
+import {
+  IAppointmentHoursOptions,
+  IAppointmentHoursProps,
+} from "@/interfaces/appointment-hours";
+
+export const startTimeOptions: IAppointmentHoursOptions[] = [
+  { label: "9:00 AM", value: "09:00" },
+  { label: "10:00 AM", value: "10:00" },
+  { label: "11:00 AM", value: "11:00" },
+  { label: "12:00 PM", value: "12:00" },
+  { label: "1:00 PM", value: "13:00" },
+  { label: "2:00 PM", value: "14:00" },
+  { label: "3:00 PM", value: "15:00" },
+  { label: "4:00 PM", value: "16:00" },
+  { label: "5:00 PM", value: "17:00" },
+];
+
+export const endTimeOptions: IAppointmentHoursOptions[] = [
+  { label: "10:00 AM", value: "10:00" },
+  { label: "11:00 AM", value: "11:00" },
+  { label: "12:00 PM", value: "12:00" },
+  { label: "1:00 PM", value: "13:00" },
+  { label: "2:00 PM", value: "14:00" },
+  { label: "3:00 PM", value: "15:00" },
+  { label: "4:00 PM", value: "16:00" },
+  { label: "5:00 PM", value: "17:00" },
+];
+
+export const availabilityData: IAppointmentHoursProps[] = [
+  {
+    formattedDayOfWeek: "Sunday",
+    dayOfWeek: 0,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-1",
+  },
+  {
+    formattedDayOfWeek: "Monday",
+    dayOfWeek: 1,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-2",
+  },
+  {
+    formattedDayOfWeek: "Tuesday",
+    dayOfWeek: 2,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-3",
+  },
+  {
+    formattedDayOfWeek: "Wednesday",
+    dayOfWeek: 3,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-4",
+  },
+  {
+    formattedDayOfWeek: "Thursday",
+    dayOfWeek: 4,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-5",
+  },
+  {
+    formattedDayOfWeek: "Friday",
+    dayOfWeek: 5,
+    startTime: "10:00",
+    endTime: "14:00",
+    isAvailable: false,
+    id: "day-6",
+  },
+  {
+    formattedDayOfWeek: "Saturday",
+    dayOfWeek: 6,
+    startTime: "10:00",
+    endTime: "14:00",
+    isAvailable: false,
+    id: "day-7",
+  },
+];
+
+export const telemedicineData: IAppointmentHoursProps[] = [
+  {
+    formattedDayOfWeek: "Sunday",
+    dayOfWeek: 0,
+    startTime: "12:00",
+    endTime: "15:00",
+    isAvailable: false,
+    id: "day-1",
+  },
+  {
+    formattedDayOfWeek: "Monday",
+    dayOfWeek: 1,
+    startTime: "12:00",
+    endTime: "15:00",
+    isAvailable: false,
+    id: "day-2",
+  },
+  {
+    formattedDayOfWeek: "Tuesday",
+    dayOfWeek: 2,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-3",
+  },
+  {
+    formattedDayOfWeek: "Wednesday",
+    dayOfWeek: 3,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: true,
+    id: "day-4",
+  },
+  {
+    formattedDayOfWeek: "Thursday",
+    dayOfWeek: 4,
+    startTime: "09:00",
+    endTime: "17:00",
+    isAvailable: false,
+    id: "day-5",
+  },
+  {
+    formattedDayOfWeek: "Friday",
+    dayOfWeek: 5,
+    startTime: "10:00",
+    endTime: "14:00",
+    isAvailable: false,
+    id: "day-6",
+  },
+  {
+    formattedDayOfWeek: "Saturday",
+    dayOfWeek: 6,
+    startTime: "10:00",
+    endTime: "14:00",
+    isAvailable: false,
+    id: "day-7",
+  },
+];
